@@ -6,7 +6,7 @@ const signs = {
     '/': true,
     '+': true,
     '-': true,
-    '.': true,
+    '.': true
 };
 
 
@@ -17,7 +17,7 @@ const shortenString = () => {
 };
 
 const checkExpression = () => {
-    if (mathExpression.length === 1 && (mathExpression === '/' || mathExpression === '*' || mathExpression === '.' || mathExpression === '+')) {
+    if (mathExpression.length === 1 && signs[mathExpression]) {
         mathExpression = '';
         displayField = mathExpression;
     }
@@ -32,7 +32,7 @@ const writeNumber = (num) => {
 
 const writeOp = (op) => {
     for (let key in signs) {
-        if (displayField.slice(displayField.length - 1) === key) {
+        if (displayField[displayField.length - 1] === key) {
             displayField = displayField.slice(0, displayField.length - 1);
             mathExpression = mathExpression.slice(0, mathExpression.length - 1);
         }
@@ -46,11 +46,13 @@ const writeOp = (op) => {
 
 
 const same = () => {
-    mathExpression = eval(mathExpression);
-    displayField = mathExpression;
-    document.getElementById('answer').innerHTML = mathExpression;
-    displayField+='';
-    mathExpression +='';
+    if (mathExpression !== '') {
+        mathExpression = eval(mathExpression);
+        displayField = mathExpression;
+        document.getElementById('answer').innerHTML = mathExpression;
+        displayField += '';
+        mathExpression += '';
+    }
 };
 
 const remove = () => {
